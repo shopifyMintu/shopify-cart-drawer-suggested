@@ -1,0 +1,51 @@
+<!-- cart-recommendation.liquid -->
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+ <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<h3>Cart Recommended Product</h3>
+{% assign collection = collections[settings.cart_recommendation] %}
+<div class="cart-recommendation">
+  {% for product in collection.products limit: 4 %}
+     {% render 'card-product-cart',
+                    card_product: product,
+                    media_aspect_ratio: section.settings.image_ratio,
+                    image_shape: section.settings.image_shape,
+                    show_secondary_image: section.settings.show_secondary_image,
+                    show_vendor: section.settings.show_vendor,
+                    show_rating: section.settings.show_rating,
+                    lazy_load: lazy_load,
+                    quick_add: 'standard',
+                  %}
+    {% endfor %}
+</div>
+
+
+ <style>
+  .cart-recommendation {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    width: 100%;
+    overflow-x: auto;
+    min-height: 320px;
+    overflow-y: hidden; 
+    padding: 10px 0;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .cart-recommendation .product-card-wrapper {
+    flex: 0 0 auto;
+    width: 160px; 
+    scroll-snap-align: start;
+  }
+
+ 
+  .cart-recommendation::-webkit-scrollbar {
+    height: 6px;
+  }
+  .cart-recommendation::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 10px;
+  }
+</style> 
